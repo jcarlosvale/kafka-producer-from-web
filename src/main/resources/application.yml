@@ -1,0 +1,28 @@
+collector:
+  seed: 0.5
+  topic: "some_topic"
+logging:
+  level:
+    root: info
+#Kafka configuration
+spring:
+  kafka:
+    producer:
+      bootstrap-servers: "127.0.0.1:9092"
+      properties:
+        enable:
+          idempotence: true
+        max:
+          in:
+            flight:
+              requests:
+                per:
+                  connection: "5"
+        linger:
+          ms: "20"
+      acks: "all"
+      retries: 0x7fffffff
+      compression-type: "snappy"
+      batch-size: 32768
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
