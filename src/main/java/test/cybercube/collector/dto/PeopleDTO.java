@@ -19,5 +19,7 @@ public class PeopleDTO {
     private String firstName;
     @NotNull
     private String lastName;
+    @NotNull
+    private Integer age;
     private Double baseSeed;
 }
