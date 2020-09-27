@@ -24,7 +24,7 @@ public class CollectorController {
     @PostMapping(value = ITEM_END_POINT_V1, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public Mono<Void> collect(@RequestBody PeopleDTO peopleDTO) {
-        log.debug("Received data: {}", peopleDTO);
+        log.info("Received data: {}", peopleDTO);
         collectorService.processMessage(peopleDTO);
         return Mono.empty();
     }
