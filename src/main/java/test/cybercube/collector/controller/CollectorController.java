@@ -12,6 +12,8 @@ import reactor.core.publisher.Mono;
 import test.cybercube.collector.dto.PeopleDTO;
 import test.cybercube.collector.service.CollectorService;
 
+import javax.validation.Valid;
+
 import static test.cybercube.collector.configuration.CollectorConstants.ITEM_END_POINT_V1;
 
 @RestController
@@ -23,7 +25,7 @@ public class CollectorController {
 
     @PostMapping(value = ITEM_END_POINT_V1, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public Mono<Void> collect(@RequestBody PeopleDTO peopleDTO) {
+    public Mono<Void> collect(@Valid @RequestBody PeopleDTO peopleDTO) {
         log.info("Received data: {}", peopleDTO);
         collectorService.processMessage(peopleDTO);
         return Mono.empty();
