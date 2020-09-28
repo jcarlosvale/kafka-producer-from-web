@@ -22,6 +22,7 @@ number 0-1)
 * Spring
 * Maven 
 * Kafka
+* TestContainers
 
 ##Setting up Kafka's Docker
 The files used by me you can find inside the docker folder in the project.
