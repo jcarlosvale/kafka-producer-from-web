@@ -7,15 +7,17 @@ import org.springframework.stereotype.Service;
 import test.cybercube.collector.configuration.CollectorProperties;
 import test.cybercube.collector.dto.PeopleDTO;
 
+import javax.validation.Valid;
+
 @Service
 @RequiredArgsConstructor
 @Log4j2
 public class CollectorService {
 
-    private final KafkaTemplate<String, PeopleDTO> kafkaTemplate;
+    private final @Valid KafkaTemplate<String, PeopleDTO> kafkaTemplate;
     private final CollectorProperties collectorProperties;
 
-    public void processMessage(PeopleDTO peopleDTO) {
+    public void processMessage(@Valid PeopleDTO peopleDTO) {
         peopleDTO.setBaseSeed(collectorProperties.getSeed());
         log.info("sending to Kafka peopleDTO='{}' topic='{}'", peopleDTO, collectorProperties.getTopic());
         kafkaTemplate.send(collectorProperties.getTopic(), peopleDTO);

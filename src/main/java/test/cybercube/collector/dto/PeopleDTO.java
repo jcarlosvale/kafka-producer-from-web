@@ -5,7 +5,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /*
 Represents the People Data from the request and the seed from the application.yml
@@ -15,11 +17,15 @@ Represents the People Data from the request and the seed from the application.ym
 @AllArgsConstructor
 @Builder
 public class PeopleDTO {
-    @NotNull
+
+    @NotNull @NotNull @Size(min = 3)
     private String firstName;
-    @NotNull
+
+    @NotNull @Size(min = 3)
     private String lastName;
-    @NotNull
+
+    @NotNull @Min(18)
     private Integer age;
+
     private Double baseSeed;
 }
