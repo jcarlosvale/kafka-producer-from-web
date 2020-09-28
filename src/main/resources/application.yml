@@ -26,3 +26,4 @@ spring:
       batch-size: 32768
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
