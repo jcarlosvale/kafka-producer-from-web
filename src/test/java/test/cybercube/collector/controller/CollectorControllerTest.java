@@ -1,16 +1,14 @@
 package test.cybercube.collector.controller;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.reactive.server.WebTestClient;
+import org.testcontainers.containers.KafkaContainer;
 import reactor.core.publisher.Mono;
 import test.cybercube.collector.dto.PeopleDTO;
 
@@ -18,25 +16,19 @@ import static test.cybercube.collector.configuration.CollectorConstants.ITEM_END
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
-@DirtiesContext
 @AutoConfigureWebTestClient(timeout = "PT1M")
-//@Testcontainers
-class CollectorControllerTest extends AbstractIntegrationTest {
+class CollectorControllerTest {
 
     @Autowired
     WebTestClient webTestClient;
 
-    @Autowired
-    KafkaProperties properties;
+    static KafkaContainer kafkaContainer = new KafkaContainer();
 
-    @BeforeEach
-    void setUp() {
-        //kafka.start();
-    }
-
-    @AfterEach
-    void tearDown() {
-//        kafka.stop();
+    @BeforeAll
+    public static void setUp() {
+        kafkaContainer.start();
+        System.setProperty("spring.kafka.properties.bootstrap.servers", kafkaContainer.getBootstrapServers());
+        System.setProperty("spring.kafka.consumer.properties.auto.offset.reset", "earliest");
     }
 
     @Test
